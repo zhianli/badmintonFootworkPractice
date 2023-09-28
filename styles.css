@@ -2,6 +2,35 @@ body {
     background-color: rgb(56, 56, 212);
 }
 
+/* CSS for the navigation bar */
+nav {
+    display: flex; /* Display navigation items in the same line */
+    background-color: rgb(223, 192, 192);
+    padding: 10px; /* Add some padding for spacing */
+}
+
+/* Style for navigation links */
+nav ul {
+    list-style: none; /* Remove bullet points from the list */
+    display: flex; /* Display list items in a row */
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    margin-right: 20px; /* Add some margin between navigation items */
+}
+
+nav a {
+    text-decoration: none; /* Remove underlines from links */
+    color: black; /* Set link color */
+}
+
+/* Style for navigation link hover effect */
+nav a:hover {
+    color: #3498db; /* Change link color on hover */
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 46px 259px 259px 46px;
