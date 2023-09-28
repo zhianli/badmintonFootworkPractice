@@ -1,0 +1,28 @@
+body {
+    background-color: rgb(56, 56, 212);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 46px 259px 259px 46px;
+    grid-template-rows: 198px 388px 72px;
+    border: 2px solid white;
+    width: calc(46px + 259px + 259px + 46px);
+    margin: 0 auto;
+}
+
+/* Style for grid items (boxes) */
+.grid-item {
+    background-color: green;
+    color: white;
+    text-align: center;
+    border: 2px solid white
+}
+
+.grid-item:nth-child(2) {
+    border-right: none;
+}
+
+.grid-item:nth-child(3) {
+    border-left: none;
+}
