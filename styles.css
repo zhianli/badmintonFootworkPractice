@@ -8,7 +8,7 @@ nav {
     background-color: rgb(223, 192, 192);
     padding: 10px; /* Add some padding for spacing */
     margin-top: 5px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 /* Style for navigation links */
@@ -33,10 +33,13 @@ nav a:hover {
     color: #3498db; /* Change link color on hover */
 }
 
-.footwork {
-    /* display: grid; */
-    width: calc(46px + 259px + 259px + 46px);
-    margin: 0 auto;
+.controls {
+    text-align: center;
+    background-color: lightblue;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .grid-container {
@@ -57,18 +60,15 @@ nav a:hover {
     border: 2px solid white
 }
 
-.grid-item:nth-child(2) {
-    border-right: none;
-}
+.grid-item:nth-child(2) { border-right: none; }
 
-.grid-item:nth-child(3) {
-    border-left: none;
-}
+.grid-item:nth-child(3) { border-left: none; }
 
 .footwork {
+    margin: 0 auto;
     width: 70px;
     height: 70px;
-    background-color: lightcoral;
+    background-color: transparent;
     position: absolute;
     border-radius: 50%;
 }
@@ -81,4 +81,12 @@ nav a:hover {
 #location5 { bottom: 20px; left: 50px; } /* Bottom left corner */
 #location6 { bottom: 20px; right: 50px; } /* Bottom right corner */
 
+.countdown {
+    font-size: 24px;
+    margin-top: 20px;
+}
 
+.output {
+    font-size: 24px;
+    margin-top: 20px;
+}
