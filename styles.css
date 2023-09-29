@@ -31,6 +31,12 @@ nav a:hover {
     color: #3498db; /* Change link color on hover */
 }
 
+.footwork {
+    /* display: grid; */
+    width: calc(46px + 259px + 259px + 46px);
+    margin: 0 auto;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: 46px 259px 259px 46px;
@@ -44,7 +50,7 @@ nav a:hover {
 .grid-item {
     background-color: green;
     color: white;
-    text-align: center;
+    /* text-align: center; */
     border: 2px solid white
 }
 
