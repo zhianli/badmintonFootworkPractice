@@ -1,5 +1,5 @@
 body {
-    background-color: blue;
+    background-color: #002868;
 }
 
 /* CSS for the navigation bar */
@@ -35,7 +35,7 @@ nav a:hover {
 
 .controls {
     text-align: center;
-    background-color: lightblue;
+    background-color: cadetblue;
     display: inline-block;
     position: relative;
     left: 50%;
