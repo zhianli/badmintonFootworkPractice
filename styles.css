@@ -50,6 +50,7 @@ nav a:hover {
     border: 2px solid white;
     width: calc(46px + 259px + 259px + 46px);
     margin: 0 auto;
+    transform: perspective(900px) rotateX(60deg);
 }
 
 /* Style for grid items (boxes) */
@@ -57,7 +58,7 @@ nav a:hover {
     background-color: green;
     color: white;
     /* text-align: center; */
-    border: 2px solid white
+    border: 2px solid white;
 }
 
 .grid-item:nth-child(2) { border-right: none; }
