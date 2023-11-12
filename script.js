@@ -1,4 +1,15 @@
-document.getElementById('start-button').addEventListener('click', startPractice);
+let intervalId; // Declare intervalId outside the startPractice function so it's accessible globally
+let isPracticeRunning = false; // Variable to track the state of practic
+
+document.getElementById('start-stop-button').addEventListener('click', togglePractice); 
+
+function togglePractice() {
+    if (isPracticeRunning) {
+        stopPractice();
+    } else {
+        startPractice();
+    }
+}
 
 function startPractice() {
     let duration = parseInt(document.getElementById('duration').value) * 1000; // Convert to milliseconds
@@ -7,6 +18,9 @@ function startPractice() {
 
     const countdownElement = document.getElementById('countdown'); // countdown at the bottom of the page
     const outputElement = document.getElementById('output'); // output the number in the list
+
+    document.getElementById('start-stop-button').textContent = 'Stop';
+    isPracticeRunning = true;
 
     function updateCountdown(remaining) {
         const minutes = Math.floor(remaining / 60000);
@@ -67,7 +81,7 @@ function startPractice() {
 
     updateCountdown(duration);
 
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
         if (currentIndex < totalRandomNumbers) {
             const randomNumber = randomNumbers[currentIndex];
             highlightLocation(randomNumber); // calls the function to mark location red base on number
@@ -93,3 +107,27 @@ function highlightLocation(randomNumber) {
     }, highlightInterval); // Remove the highlight after a half the interval
 }
 
+
+function stopPractice() {
+    // Clear the interval using the intervalId
+    clearInterval(intervalId);
+    document.getElementById('countdown').textContent = 'Practice Stopped';
+    document.getElementById('output').textContent = '';
+    resetLocations(); // Add a function to reset highlighted locations
+
+    // Update button text and state
+    document.getElementById('start-stop-button').textContent = 'Start';
+    isPracticeRunning = false;
+}
+
+function resetLocations() {
+    // Reset all highlighted locations to transparent
+    for (let i = 1; i <= 6; i++) {
+        const location = document.getElementById(`location${i}`);
+        
+        // Check if the element exists before updating its style
+        if (location) {
+            location.style.backgroundColor = 'transparent';
+        }
+    }
+}
