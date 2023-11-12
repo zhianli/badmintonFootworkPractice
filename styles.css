@@ -54,7 +54,7 @@ nav a:hover {
     box-shadow: 2px 10px 30px; /* add shadow to court to add 3D effect */
 }
 
-/* below code removes the 3D tilt effect */
+/* below code removes the 3D tilt effect when hover */
 /* .grid-container:hover {
     transition: 0.5s ease;
     transform: rotate(0);
