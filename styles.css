@@ -82,12 +82,12 @@ nav a:hover {
 }
 
 /* Position in court */
-#location1 { top: 50px; left: 50px; } /* Top left corner */
-#location2 { top: 50px; right: 50px; } /* Top right corner */
-#location3 { top: 50%; left: 50px; transform: translate(0, -50%); } /* Middle left */
-#location4 { top: 50%; right: 50px; transform: translate(0, -50%); } /* Middle right */
-#location5 { bottom: 20px; left: 50px; } /* Bottom left corner */
-#location6 { bottom: 20px; right: 50px; } /* Bottom right corner */
+.footwork.frontLeft { top: 50px; left: 50px; } /* Top left corner */
+.footwork.frontRight { top: 50px; right: 50px; } /* Top right corner */
+.footwork.middleLeft { top: 50%; left: 50px; transform: translate(0, -50%); } /* Middle left */
+.footwork.middleRight { top: 50%; right: 50px; transform: translate(0, -50%); } /* Middle right */
+.footwork.backLeft { bottom: 20px; left: 50px; } /* Bottom left corner */
+.footwork.backRight { bottom: 20px; right: 50px; } /* Bottom right corner */
 
 .countdown {
     font-size: 24px;
