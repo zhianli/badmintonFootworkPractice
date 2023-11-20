@@ -8,6 +8,7 @@ function togglePractice() {
         stopPractice();
     } else {
         startPractice();
+        startCountdown();
     }
 }
 
@@ -71,12 +72,12 @@ function startPractice() {
     function generateRandomNumbers() {
         const randomNumbers = [];
         for (let i = 0; i < totalRandomNumbers; i++) {
-            randomNumbers.push(Math.floor(Math.random() * decideTrainingMethod()) + 1); // random numbers: 1, 2, 3, 4, 5, 6
+            randomNumbers.push(Math.floor(Math.random() * decideTrainingMethod()) + 1); // decideTrainingMethod function returns random number range: 6, 4, 2
         }
         return randomNumbers;
     }
 
-    const randomNumbers = generateRandomNumbers(); // [2, 4, 1, 4, 5, 1, 6]
+    const randomNumbers = generateRandomNumbers(); // [2, 4, 1, 4, 5, 1, 6] or [1, 4, 2, 4, 3, 1] or [1, 1, 2, 1, 2]
     let currentIndex = 0;
 
     updateCountdown(duration);
@@ -97,9 +98,10 @@ function startPractice() {
     }, interval);
 }
 
+// function to highlight a location red for half the interval
 function highlightLocation(randomNumber) {
     const location = document.getElementById(`location${randomNumber}`); // the number that will mark red
-    const highlightInterval = parseInt(document.getElementById('interval').value) / 2 ;
+    const highlightInterval = parseInt(document.getElementById('interval').value) / 2 ; // set the highlight period for half the interval
     location.style.backgroundColor = 'red';
 
     setTimeout(() => {
@@ -130,4 +132,42 @@ function resetLocations() {
             location.style.backgroundColor = 'transparent';
         }
     }
+}
+
+function startCountdown() {
+    var duration = parseInt(document.getElementById("duration").value);
+    var initialIntervalValue = parseInt(document.getElementById("interval").value);
+    var repeatCountdown = Math.floor(duration * 1000 / initialIntervalValue); // convert duration to milliseconds and divide by interval
+
+    // Function to format time as mm:ss:mmm
+    function formatTime(ms) {
+        var minutes = Math.floor(ms / (60 * 1000));
+        var seconds = Math.floor((ms % (60 * 1000)) / 1000);
+        var milliseconds = ms % 1000;
+        return (
+            (minutes < 10 ? "0" : "") + minutes + ":" +
+            (seconds < 10 ? "0" : "") + seconds + "." +
+            (milliseconds < 10 ? "00" : milliseconds < 100 ? "0" : "") + milliseconds
+        );
+    }
+
+    // Function to start the interval countdown
+    function startIntervalCountdown(repeatCountdown) {
+        if (repeatCountdown > 0) {
+            var intervalValue = initialIntervalValue; // reset intervalValue to its original value
+            var intervalTimer = setInterval(function () {
+                intervalValue -= 10; // Subtract 10 milliseconds
+                document.getElementById("interval-time").textContent = formatTime(intervalValue);
+
+                if (intervalValue <= 0) {
+                    clearInterval(intervalTimer);
+                    document.getElementById("interval-time").textContent = "00:00.000";
+                    startIntervalCountdown(repeatCountdown - 1); // trigger the next interval
+                }
+            }, 10);
+        }
+    }
+
+    // Start the interval countdown
+    startIntervalCountdown(repeatCountdown);
 }

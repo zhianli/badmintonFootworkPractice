@@ -16,18 +16,20 @@
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
-    <div class="trainingMethods">
-        <label><input type="radio" name="trainingMethod" value="fullCourt" checked>Full Court</label>
-        <label><input type="radio" name="trainingMethod" value="fourCorners">Four Corners</label>
-        <label><input type="radio" name="trainingMethod" value="leftCourt">Left Court</label>
-        <label><input type="radio" name="trainingMethod" value="rightCourt">Right Court</label>
-    </div>
-    <div class="controls">
-        <label for="duration">Duration (seconds):</label>
-        <input type="number" id="duration" min="1" value="60">
-        <label for="interval">Interval (milliseconds):</label>
-        <input type="number" id="interval" min="100" value="1000">
-        <button id="start-stop-button">Start</button>
+    <div class=".flex-container">
+        <div class="trainingMethods">
+            <label><input type="radio" name="trainingMethod" value="fullCourt" checked>Full Court</label>
+            <label><input type="radio" name="trainingMethod" value="fourCorners">Four Corners</label>
+            <label><input type="radio" name="trainingMethod" value="leftCourt">Left Court</label>
+            <label><input type="radio" name="trainingMethod" value="rightCourt">Right Court</label>
+        </div>
+        <div class="controls">
+            <label for="duration">Duration (seconds):</label>
+            <input type="number" id="duration" min="1" value="60">
+            <label for="interval">Interval (milliseconds):</label>
+            <input type="number" id="interval" min="100" value="1000">
+            <button id="start-stop-button">Start</button>
+        </div>
     </div>
     <div class="grid-container">
         <div class="grid-item"></div>
@@ -48,6 +50,9 @@
         <div class="footwork middleRight"></div>
         <div class="footwork backLeft"></div>
         <div class="footwork backRight"></div>
+    </div>
+    <div id="interval-container" class="milisecondCountdown">
+        <div id="interval-time" class="time"></div>
     </div>
     <div class="countdown" id="countdown"></div>
     <div class="output" id="output"></div>

@@ -8,7 +8,7 @@ nav {
     background-color: rgb(223, 192, 192);
     padding: 10px; /* Add some padding for spacing */
     margin-top: 5px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 
 /* Style for navigation links */
@@ -33,13 +33,34 @@ nav a:hover {
     color: #3498db; /* Change link color on hover */
 }
 
-.controls {
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.trainingMethods, .controls {
     text-align: center;
+    margin-bottom: 5px;
     background-color: cadetblue;
-    display: inline-block;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+}
+
+/* Center align the milisecondCountdown timer */
+#interval-container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* Increase font size */
+.milisecondCountdown .time {
+    font-size: 3em;
+    background-color: #323a45;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .grid-container {
