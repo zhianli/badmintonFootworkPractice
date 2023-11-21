@@ -1,4 +1,6 @@
 let intervalId; // Declare intervalId outside the startPractice function so it's accessible globally
+let intervalTimer; // Declare intervalTimer outside the startMillisecondCountdown function so it's accessible globally
+let secondCountdownInterval;// Declare secondCountdownInterval outside the startCountdownEverySecond function so it's accessible globally
 let isPracticeRunning = false; // Variable to track the state of practic
 
 document.getElementById('start-stop-button').addEventListener('click', togglePractice); 
@@ -6,9 +8,12 @@ document.getElementById('start-stop-button').addEventListener('click', togglePra
 function togglePractice() {
     if (isPracticeRunning) {
         stopPractice();
+        stopMillisecondCountdown();
+        stopCountdownEverySecond();
     } else {
         startPractice();
-        startCountdown();
+        startMillisecondCountdown();
+        startCountdownEverySecond();
     }
 }
 
@@ -23,13 +28,7 @@ function startPractice() {
     document.getElementById('start-stop-button').textContent = 'Stop';
     isPracticeRunning = true;
 
-    function updateCountdown(remaining) {
-        const minutes = Math.floor(remaining / 60000);
-        const seconds = Math.floor((remaining % 60000) / 1000);
-        const milliseconds = remaining % 1000;
-        countdownElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(3, '0')}`;
-    }
-
+    // function to set the corners with location numbers
     function decideTrainingMethod() {
         var trainingMethod = document.querySelector('input[name="trainingMethod"]:checked');
         var optionValue = trainingMethod.value;
@@ -69,6 +68,18 @@ function startPractice() {
         return randomNumberRange; // return the random number range
     }
 
+    // function to highlight a location red for half the interval
+    function highlightLocation(randomNumber) {
+        const location = document.getElementById(`location${randomNumber}`); // the number that will mark red
+        const highlightInterval = parseInt(document.getElementById('interval').value) / 2 ; // set the highlight period for half the interval
+        location.style.backgroundColor = 'red';
+
+        setTimeout(() => {
+            location.style.backgroundColor = 'transparent';
+        }, highlightInterval); // Remove the highlight after a half the interval
+    }
+
+    // function to generate a list of random numbers
     function generateRandomNumbers() {
         const randomNumbers = [];
         for (let i = 0; i < totalRandomNumbers; i++) {
@@ -80,37 +91,37 @@ function startPractice() {
     const randomNumbers = generateRandomNumbers(); // [2, 4, 1, 4, 5, 1, 6] or [1, 4, 2, 4, 3, 1] or [1, 1, 2, 1, 2]
     let currentIndex = 0;
 
-    updateCountdown(duration);
-
     intervalId = setInterval(() => {
         if (currentIndex < totalRandomNumbers) {
             const randomNumber = randomNumbers[currentIndex];
-            highlightLocation(randomNumber); // calls the function to mark location red base on number
+            highlightLocation(randomNumber);
             outputElement.textContent = `Current Number: ${randomNumber}`;
             currentIndex++;
         } else {
             clearInterval(intervalId);
             countdownElement.textContent = 'Practice Complete';
             outputElement.textContent = '';
+            document.getElementById('start-stop-button').textContent = 'Start';
+            isPracticeRunning = false;
+            resetFootworkLocation();
         }
-        duration -= interval;
-        updateCountdown(duration);
     }, interval);
 }
 
-// function to highlight a location red for half the interval
-function highlightLocation(randomNumber) {
-    const location = document.getElementById(`location${randomNumber}`); // the number that will mark red
-    const highlightInterval = parseInt(document.getElementById('interval').value) / 2 ; // set the highlight period for half the interval
-    location.style.backgroundColor = 'red';
-
-    setTimeout(() => {
-        location.style.backgroundColor = 'transparent';
-    }, highlightInterval); // Remove the highlight after a half the interval
-}
-
-
 function stopPractice() {
+
+    // Reset all highlighted locations to transparent
+    function resetLocations() {
+        for (let i = 1; i <= 6; i++) {
+            const location = document.getElementById(`location${i}`);
+            
+            // Check if the element exists before updating its style
+            if (location) {
+                location.style.backgroundColor = 'transparent';
+            }
+        }
+    }
+
     // Clear the interval using the intervalId
     clearInterval(intervalId);
     document.getElementById('countdown').textContent = 'Practice Stopped';
@@ -119,22 +130,11 @@ function stopPractice() {
 
     // Update button text and state
     document.getElementById('start-stop-button').textContent = 'Start';
+    resetFootworkLocation();
     isPracticeRunning = false;
 }
 
-function resetLocations() {
-    // Reset all highlighted locations to transparent
-    for (let i = 1; i <= 6; i++) {
-        const location = document.getElementById(`location${i}`);
-        
-        // Check if the element exists before updating its style
-        if (location) {
-            location.style.backgroundColor = 'transparent';
-        }
-    }
-}
-
-function startCountdown() {
+function startMillisecondCountdown() {
     var duration = parseInt(document.getElementById("duration").value);
     var initialIntervalValue = parseInt(document.getElementById("interval").value);
     var repeatCountdown = Math.floor(duration * 1000 / initialIntervalValue); // convert duration to milliseconds and divide by interval
@@ -155,7 +155,7 @@ function startCountdown() {
     function startIntervalCountdown(repeatCountdown) {
         if (repeatCountdown > 0) {
             var intervalValue = initialIntervalValue; // reset intervalValue to its original value
-            var intervalTimer = setInterval(function () {
+            intervalTimer = setInterval(function () {
                 intervalValue -= 10; // Subtract 10 milliseconds
                 document.getElementById("interval-time").textContent = formatTime(intervalValue);
 
@@ -170,4 +170,52 @@ function startCountdown() {
 
     // Start the interval countdown
     startIntervalCountdown(repeatCountdown);
+}
+
+function stopMillisecondCountdown() {
+    document.getElementById("interval-time").textContent = "";
+    clearInterval(intervalTimer);
+}
+
+
+function startCountdownEverySecond() {
+    const countdownElement = document.getElementById('countdown');
+    let duration = parseInt(document.getElementById('duration').value) * 1000; // Convert to milliseconds
+        
+    // Function to update the countdown display
+    function updateCountdownDisplay(remaining) {
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        const milliseconds = remaining % 1000;
+        countdownElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(3, '0')}`;
+    }
+
+    function startCountdown() {
+        secondCountdownInterval = setInterval(() => {
+            if (duration > 0) {
+                updateCountdownDisplay(duration);
+                duration -= 1000; // Subtract 1000 milliseconds (1 second)
+            } else {
+                clearInterval(secondCountdownInterval);
+                countdownElement.textContent = 'Practice Complete';
+            }
+        }, 1000);
+    }
+    startCountdown();
+}
+
+function stopCountdownEverySecond() {
+    document.getElementById('countdown').textContent = "";
+    clearInterval(secondCountdownInterval);
+}
+
+// remove the location IDs added to footwork class
+function resetFootworkLocation() {
+    // Get all elements with the "footwork" class
+    const footworkElements = document.querySelectorAll('.footwork');
+
+    footworkElements.forEach((element) => {
+        // Remove the desired ID (e.g., 'location1')
+        element.removeAttribute('id');
+    });
 }
