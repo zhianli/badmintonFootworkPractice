@@ -1,8 +1,13 @@
+/* =========================================================
+   Body
+========================================================= */
 body {
     background-color: #002868;
 }
 
-/* CSS for the navigation bar */
+/* =========================================================
+   Navigation Bar
+========================================================= */
 nav {
     display: flex; /* Display navigation items in the same line */
     background-color: rgb(223, 192, 192);
@@ -11,7 +16,6 @@ nav {
     margin-bottom: 5px;
 }
 
-/* Style for navigation links */
 nav ul {
     list-style: none; /* Remove bullet points from the list */
     display: flex; /* Display list items in a row */
@@ -28,41 +32,69 @@ nav a {
     color: black; /* Set link color */
 }
 
-/* Style for navigation link hover effect */
 nav a:hover {
     color: #3498db; /* Change link color on hover */
 }
 
+/* =========================================================
+   Flex Container (Top Controls)
+========================================================= */
 .flex-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* horizontal */
+    justify-content: space-between; /* push first left, second right */
+    align-items: center; /* vertical centering */
+    width: 100%; /* stretch across the page */
+    background-color: cadetblue; /* optional: unify background */
+    padding: 10px; /* spacing inside */
+    box-sizing: border-box; /* make sure padding fits in width */
 }
 
-.trainingMethods, .controls {
-    text-align: center;
-    margin-bottom: 5px;
-    background-color: cadetblue;
-    display: flex;
-    padding: 10px;
-    justify-content: center;
+/* =========================================================
+   Below Flex Container (Court, Timer, Countdown)
+========================================================= */
+.below-flex {
+    margin-top: -100px; /* adjust vertical position */
+    pointer-events: none; /* allow clicks to pass through */
+    position: relative; /* positioning context for absolute children */
 }
 
-/* Center align the milisecondCountdown timer */
+/* =========================================================
+   Interval Timer Container
+========================================================= */
 #interval-container {
-    text-align: center;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* center in container */
+    background: rgba(0,0,0,0.6); /* semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
 }
 
-/* Increase font size */
+/* Timer text inside interval container */
+#interval-container .time {
+    font-size: 3em;
+    color: white;
+    font-weight: bold;
+    background: none; /* remove inner box */
+    padding: 0 10px;
+}
+
+/* Milisecond countdown timer with inner box */
 .milisecondCountdown .time {
     font-size: 3em;
-    background-color: #323a45;
     color: white;
+    font-weight: bold;
+    background-color: #323a45;
     padding-left: 10px;
     padding-right: 10px;
 }
 
+/* =========================================================
+   Grid Container (Court)
+========================================================= */
 .grid-container {
     display: grid;
     position: relative;
@@ -75,13 +107,15 @@ nav a:hover {
     box-shadow: 2px 10px 30px; /* add shadow to court to add 3D effect */
 }
 
-/* below code removes the 3D tilt effect when hover */
+/* Optional: remove the 3D tilt effect on hover */
 /* .grid-container:hover {
     transition: 0.5s ease;
     transform: rotate(0);
 } */
 
-/* Style for grid items (boxes) */
+/* =========================================================
+   Grid Items (Boxes)
+========================================================= */
 .grid-item {
     background-color: green;
     color: white;
@@ -89,10 +123,17 @@ nav a:hover {
     border: 2px solid white;
 }
 
-.grid-item:nth-child(2) { border-right: none; }
+.grid-item:nth-child(2) {
+    border-right: none;
+}
 
-.grid-item:nth-child(3) { border-left: none; }
+.grid-item:nth-child(3) {
+    border-left: none;
+}
 
+/* =========================================================
+   Footwork Markers
+========================================================= */
 .footwork {
     margin: 0 auto;
     width: 70px;
@@ -103,18 +144,46 @@ nav a:hover {
 }
 
 /* Position in court */
-.footwork.frontLeft { top: 50px; left: 50px; } /* Top left corner */
-.footwork.frontRight { top: 50px; right: 50px; } /* Top right corner */
-.footwork.middleLeft { top: 50%; left: 50px; transform: translate(0, -50%); } /* Middle left */
-.footwork.middleRight { top: 50%; right: 50px; transform: translate(0, -50%); } /* Middle right */
-.footwork.backLeft { bottom: 20px; left: 50px; } /* Bottom left corner */
-.footwork.backRight { bottom: 20px; right: 50px; } /* Bottom right corner */
+.footwork.frontLeft {
+    top: 50px;
+    left: 50px;
+} /* Top left corner */
 
-.countdown, .output {
+.footwork.frontRight {
+    top: 50px;
+    right: 50px;
+} /* Top right corner */
+
+.footwork.middleLeft {
+    top: 50%;
+    left: 50px;
+    transform: translate(0, -50%);
+} /* Middle left */
+
+.footwork.middleRight {
+    top: 50%;
+    right: 50px;
+    transform: translate(0, -50%);
+} /* Middle right */
+
+.footwork.backLeft {
+    bottom: 20px;
+    left: 50px;
+} /* Bottom left corner */
+
+.footwork.backRight {
+    bottom: 20px;
+    right: 50px;
+} /* Bottom right corner */
+
+/* =========================================================
+   Countdown and Output
+========================================================= */
+.countdown,
+.output {
     font-size: 36px;
     font-weight: bold;
     margin-top: 20px;
     text-align: center;
     color: #3498db;
 }
-
