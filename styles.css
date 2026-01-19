@@ -116,10 +116,14 @@ nav a:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); /* center in container */
+    z-index: 10;
+}
+
+/* Show background only when timer has content */
+#interval-container:has(.time:not(:empty)) {
     background: rgba(0,0,0,0.6); /* semi-transparent background */
     padding: 20px;
     border-radius: 10px;
-    z-index: 10;
 }
 
 /* Timer text inside interval container */
