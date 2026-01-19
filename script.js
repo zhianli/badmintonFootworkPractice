@@ -201,8 +201,12 @@ function startMillisecondCountdown() {
 
                 if (intervalValue <= 0) {
                     clearInterval(intervalTimer);
-                    document.getElementById("interval-time").textContent = "00.000";
-                    startIntervalCountdown(repeatCountdown - 1); // trigger the next interval
+                    if (repeatCountdown - 1 > 0) {
+                        document.getElementById("interval-time").textContent = "00.000";
+                        startIntervalCountdown(repeatCountdown - 1); // trigger the next interval
+                    } else {
+                        document.getElementById("interval-time").textContent = ""; // Clear display when done
+                    }
                 }
             }, 10);
         }
