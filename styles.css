@@ -50,6 +50,55 @@ nav a:hover {
     box-sizing: border-box; /* make sure padding fits in width */
 }
 
+/* Controls styling */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.controls label {
+    font-weight: bold;
+    color: white;
+    margin-right: 5px;
+}
+
+.controls input[type="number"] {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 80px;
+}
+
+.controls button {
+    padding: 8px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.controls button:hover {
+    background-color: #2980b9;
+}
+
+/* Training methods styling */
+.trainingMethods {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.trainingMethods label {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 /* =========================================================
    Below Flex Container (Court, Timer, Countdown)
 ========================================================= */
@@ -179,11 +228,38 @@ nav a:hover {
 /* =========================================================
    Countdown and Output
 ========================================================= */
-.countdown,
-.output {
-    font-size: 36px;
-    font-weight: bold;
-    margin-top: 20px;
+.countdown-container {
+    margin-top: 30px;
     text-align: center;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.set-info {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ecf0f1;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.countdown {
+    font-size: 48px;
+    font-weight: bold;
     color: #3498db;
+    margin: 15px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.status-message {
+    font-size: 20px;
+    font-weight: 600;
+    color: #f39c12;
+    margin-top: 10px;
+    font-style: italic;
 }

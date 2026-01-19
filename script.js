@@ -1,19 +1,45 @@
 let intervalId; // Declare intervalId outside the startPractice function so it's accessible globally
 let intervalTimer; // Declare intervalTimer outside the startMillisecondCountdown function so it's accessible globally
 let secondCountdownInterval;// Declare secondCountdownInterval outside the startCountdownEverySecond function so it's accessible globally
-let isPracticeRunning = false; // Variable to track the state of practic
+let isPracticeRunning = false; // Variable to track the state of practice
+let currentRepetition = 0; // Track current repetition number
+let totalRepetitions = 1; // Total number of repetitions
+let isResting = false; // Track if currently in rest period
 
 document.getElementById('start-stop-button').addEventListener('click', togglePractice); 
 
 function togglePractice() {
-    if (isPracticeRunning) {
+    if (isPracticeRunning || isResting) {
         stopPractice();
         stopMillisecondCountdown();
         stopCountdownEverySecond();
+        currentRepetition = 0;
+        isResting = false;
     } else {
+        totalRepetitions = parseInt(document.getElementById('repetitions').value);
+        currentRepetition = 1;
+        startRepetitionCycle();
+    }
+}
+
+function startRepetitionCycle() {
+    if (currentRepetition <= totalRepetitions) {
+        // Update display to show current repetition
+        document.getElementById('set-info').textContent = `Set ${currentRepetition} of ${totalRepetitions}`;
+        document.getElementById('status-message').textContent = 'Training in Progress';
+        document.getElementById('countdown').textContent = '';
+        
+        // Start the practice session
         startPractice();
         startMillisecondCountdown();
         startCountdownEverySecond();
+    } else {
+        // All repetitions complete
+        document.getElementById('set-info').textContent = '';
+        document.getElementById('countdown').textContent = '🎉 All Sets Complete! 🎉';
+        document.getElementById('status-message').textContent = 'Great work!';
+        document.getElementById('start-stop-button').textContent = 'Start';
+        currentRepetition = 0;
     }
 }
 
@@ -23,7 +49,6 @@ function startPractice() {
     const totalRandomNumbers = duration / interval; // 60 seconds, 2000ms (60 / 2 = 30)
 
     const countdownElement = document.getElementById('countdown'); // countdown at the bottom of the page
-    const outputElement = document.getElementById('output'); // output the number in the list
 
     document.getElementById('start-stop-button').textContent = 'Stop';
     isPracticeRunning = true;
@@ -95,12 +120,10 @@ function startPractice() {
         if (currentIndex < totalRandomNumbers) {
             const randomNumber = randomNumbers[currentIndex];
             highlightLocation(randomNumber);
-            outputElement.textContent = `Current Number: ${randomNumber}`;
             currentIndex++;
         } else {
             clearInterval(intervalId);
             countdownElement.textContent = 'Practice Complete';
-            outputElement.textContent = '';
             document.getElementById('start-stop-button').textContent = 'Start';
             isPracticeRunning = false;
             resetFootworkLocation();
@@ -125,7 +148,6 @@ function stopPractice() {
     // Clear the interval using the intervalId
     clearInterval(intervalId);
     document.getElementById('countdown').textContent = 'Practice Stopped';
-    document.getElementById('output').textContent = '';
     resetLocations(); // Add a function to reset highlighted locations
 
     // Update button text and state
@@ -197,15 +219,57 @@ function startCountdownEverySecond() {
                 duration -= 1000; // Subtract 1000 milliseconds (1 second)
             } else {
                 clearInterval(secondCountdownInterval);
-                countdownElement.textContent = 'Practice Complete';
+                // Check if there are more repetitions
+                if (currentRepetition < totalRepetitions) {
+                    startRestPeriod();
+                } else {
+                    document.getElementById('set-info').textContent = '';
+                    countdownElement.textContent = '🎉 All Sets Complete! 🎉';
+                    document.getElementById('status-message').textContent = 'Great work!';
+                    stopPractice();
+                }
             }
         }, 1000);
     }
     startCountdown();
 }
 
+function startRestPeriod() {
+    // Stop the current practice
+    stopPractice();
+    stopMillisecondCountdown();
+    
+    isResting = true;
+    const restDuration = parseInt(document.getElementById('rest').value);
+    let restRemaining = restDuration;
+    
+    // Update display elements
+    document.getElementById('set-info').textContent = `Rest Period`;
+    document.getElementById('status-message').textContent = `Next: Set ${currentRepetition + 1} of ${totalRepetitions}`;
+    
+    // Update rest countdown every second
+    const restInterval = setInterval(() => {
+        if (restRemaining > 0 && isResting) {
+            document.getElementById('countdown').textContent = `${restRemaining}s`;
+            restRemaining--;
+        } else {
+            clearInterval(restInterval);
+            if (isResting) {
+                isResting = false;
+                currentRepetition++;
+                startRepetitionCycle();
+            }
+        }
+    }, 1000);
+    
+    // Also store the interval so it can be cleared if stopped
+    secondCountdownInterval = restInterval;
+}
+
 function stopCountdownEverySecond() {
+    document.getElementById('set-info').textContent = "";
     document.getElementById('countdown').textContent = "";
+    document.getElementById('status-message').textContent = "";
     clearInterval(secondCountdownInterval);
 }
 
