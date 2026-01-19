@@ -107,6 +107,11 @@ function startPractice() {
                 document.querySelector('.footwork.backRight').setAttribute('id', 'location2');
                 randomNumberRange = 2;
                 break;
+            case 'backCourt':
+                document.querySelector('.footwork.backLeft').setAttribute('id', 'location1');
+                document.querySelector('.footwork.backRight').setAttribute('id', 'location2');
+                randomNumberRange = 2;
+                break;
             default:
                 randomNumberRange = 0;
         }
