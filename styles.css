@@ -179,6 +179,60 @@ nav a:hover {
     font-weight: bold;
     background: none; /* remove inner box */
     padding: 0 10px;
+    transition: opacity 0.3s ease-in;
+}
+
+/* Hide timer when it's being reset */
+#interval-container .time:empty {
+    opacity: 0;
+}
+
+/* Race countdown animation */
+#interval-container .race-countdown {
+    font-size: 8em !important;
+    color: #ffffff;
+    font-weight: 900;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    text-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.8),
+        0 0 60px rgba(52, 152, 219, 0.6),
+        4px 4px 8px rgba(0, 0, 0, 0.5);
+    animation: countdownEnlarge 1s ease-out;
+    background: none !important;
+    padding: 0 !important;
+    z-index: 100;
+    position: relative;
+}
+
+/* Remove background during countdown - force override */
+#interval-container:has(.race-countdown) {
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Additional override for countdown display */
+.race-countdown {
+    background: transparent !important;
+}
+
+@keyframes countdownEnlarge {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
 }
 
 /* Milisecond countdown timer with inner box */

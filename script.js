@@ -47,13 +47,11 @@ function startRepetitionCycle() {
     if (currentRepetition <= totalRepetitions) {
         // Update display to show current repetition
         document.getElementById('set-info').textContent = `Set ${currentRepetition} of ${totalRepetitions}`;
-        document.getElementById('status-message').textContent = 'Training in Progress';
+        document.getElementById('status-message').textContent = 'Get Ready...';
         document.getElementById('countdown').textContent = '';
         
-        // Start the practice session
-        startPractice();
-        startMillisecondCountdown();
-        startCountdownEverySecond();
+        // Start 3-2-1 countdown before practice
+        startRaceCountdown();
     } else {
         // All repetitions complete
         document.getElementById('set-info').textContent = '';
@@ -62,6 +60,55 @@ function startRepetitionCycle() {
         document.getElementById('start-stop-button').textContent = 'Start';
         currentRepetition = 0;
     }
+}
+
+function startRaceCountdown() {
+    const countdownDisplay = document.getElementById('interval-time');
+    const intervalContainer = document.getElementById('interval-container');
+    let count = 3;
+    
+    // Force remove background during countdown
+    intervalContainer.style.background = 'transparent';
+    intervalContainer.style.padding = '0';
+    intervalContainer.style.borderRadius = '0';
+    
+    function showNumber() {
+        if (count > 0) {
+            // Set text and add class
+            countdownDisplay.textContent = count;
+            countdownDisplay.classList.add('race-countdown');
+            
+            count--;
+            
+            // Clear after animation completes (1000ms)
+            setTimeout(() => {
+                countdownDisplay.textContent = '';
+                countdownDisplay.classList.remove('race-countdown');
+                // Small delay before next number
+                setTimeout(showNumber, 50);
+            }, 1000);
+        } else {
+            // Clean up countdown display
+            countdownDisplay.classList.remove('race-countdown');
+            countdownDisplay.textContent = '';
+            
+            // Reset interval container styles
+            intervalContainer.style.background = '';
+            intervalContainer.style.padding = '';
+            intervalContainer.style.borderRadius = '';
+            
+            // Small delay to ensure clean transition
+            setTimeout(() => {
+                document.getElementById('status-message').textContent = 'Training in Progress';
+                // Start the practice session
+                startPractice();
+                startMillisecondCountdown();
+                startCountdownEverySecond();
+            }, 300);
+        }
+    }
+    
+    showNumber();
 }
 
 function startPractice() {
