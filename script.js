@@ -39,6 +39,9 @@ function togglePractice() {
     } else {
         totalRepetitions = parseInt(document.getElementById('repetitions').value);
         currentRepetition = 1;
+        // Change button to Stop immediately to prevent double-click
+        document.getElementById('start-stop-button').textContent = 'Stop';
+        isPracticeRunning = true;
         startRepetitionCycle();
     }
 }
@@ -73,6 +76,17 @@ function startRaceCountdown() {
     intervalContainer.style.borderRadius = '0';
     
     function showNumber() {
+        // Check if user clicked stop during countdown
+        if (!isPracticeRunning) {
+            // Abort countdown
+            countdownDisplay.classList.remove('race-countdown');
+            countdownDisplay.textContent = '';
+            intervalContainer.style.background = '';
+            intervalContainer.style.padding = '';
+            intervalContainer.style.borderRadius = '';
+            return;
+        }
+        
         if (count > 0) {
             // Set text and add class
             countdownDisplay.textContent = count;
@@ -82,12 +96,23 @@ function startRaceCountdown() {
             
             // Clear after animation completes (1000ms)
             setTimeout(() => {
+                if (!isPracticeRunning) return; // Check again
                 countdownDisplay.textContent = '';
                 countdownDisplay.classList.remove('race-countdown');
                 // Small delay before next number
                 setTimeout(showNumber, 50);
             }, 1000);
         } else {
+            // Check one more time before starting practice
+            if (!isPracticeRunning) {
+                countdownDisplay.classList.remove('race-countdown');
+                countdownDisplay.textContent = '';
+                intervalContainer.style.background = '';
+                intervalContainer.style.padding = '';
+                intervalContainer.style.borderRadius = '';
+                return;
+            }
+            
             // Clean up countdown display
             countdownDisplay.classList.remove('race-countdown');
             countdownDisplay.textContent = '';
@@ -99,6 +124,7 @@ function startRaceCountdown() {
             
             // Small delay to ensure clean transition
             setTimeout(() => {
+                if (!isPracticeRunning) return; // Final check
                 document.getElementById('status-message').textContent = 'Training in Progress';
                 // Start the practice session
                 startPractice();
@@ -117,9 +143,6 @@ function startPractice() {
     const totalRandomNumbers = duration / interval; // 60 seconds, 2000ms (60 / 2 = 30)
 
     const countdownElement = document.getElementById('countdown'); // countdown at the bottom of the page
-
-    document.getElementById('start-stop-button').textContent = 'Stop';
-    isPracticeRunning = true;
 
     // function to set the corners with location numbers
     function decideTrainingMethod() {
@@ -221,6 +244,19 @@ function stopPractice() {
     clearInterval(intervalId);
     document.getElementById('countdown').textContent = 'Practice Stopped';
     resetLocations(); // Add a function to reset highlighted locations
+
+    // Clear countdown display if stop was clicked during countdown
+    const countdownDisplay = document.getElementById('interval-time');
+    if (countdownDisplay) {
+        countdownDisplay.classList.remove('race-countdown');
+        countdownDisplay.textContent = '';
+    }
+    const intervalContainer = document.getElementById('interval-container');
+    if (intervalContainer) {
+        intervalContainer.style.background = '';
+        intervalContainer.style.padding = '';
+        intervalContainer.style.borderRadius = '';
+    }
 
     // Update button text and state
     document.getElementById('start-stop-button').textContent = 'Start';
