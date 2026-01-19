@@ -161,13 +161,11 @@ function startMillisecondCountdown() {
     var initialIntervalValue = parseFloat(document.getElementById("interval").value) * 1000; // Convert seconds to milliseconds
     var repeatCountdown = Math.floor(duration * 1000 / initialIntervalValue); // convert duration to milliseconds and divide by interval
 
-    // Function to format time as mm:ss:mmm
+    // Function to format time as s.mmm
     function formatTime(ms) {
-        var minutes = Math.floor(ms / (60 * 1000));
-        var seconds = Math.floor((ms % (60 * 1000)) / 1000);
+        var seconds = Math.floor(ms / 1000);
         var milliseconds = ms % 1000;
         return (
-            (minutes < 10 ? "0" : "") + minutes + ":" +
             (seconds < 10 ? "0" : "") + seconds + "." +
             (milliseconds < 10 ? "00" : milliseconds < 100 ? "0" : "") + milliseconds
         );
@@ -183,7 +181,7 @@ function startMillisecondCountdown() {
 
                 if (intervalValue <= 0) {
                     clearInterval(intervalTimer);
-                    document.getElementById("interval-time").textContent = "00:00.000";
+                    document.getElementById("interval-time").textContent = "00.000";
                     startIntervalCountdown(repeatCountdown - 1); // trigger the next interval
                 }
             }, 10);
