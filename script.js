@@ -176,6 +176,18 @@ function startPractice() {
                 document.querySelector('.footwork.backRight').setAttribute('id', 'location4');
                 randomNumberRange = 4;
                 break;
+            case 'frontTriangle':
+                document.querySelector('.footwork.frontLeft').setAttribute('id', 'location1');
+                document.querySelector('.footwork.frontRight').setAttribute('id', 'location2');
+                document.querySelector('.footwork.backLeft').setAttribute('id', 'location3');
+                randomNumberRange = 3;
+                break;
+            case 'frontTriangleRight':
+                document.querySelector('.footwork.frontLeft').setAttribute('id', 'location1');
+                document.querySelector('.footwork.frontRight').setAttribute('id', 'location2');
+                document.querySelector('.footwork.backRight').setAttribute('id', 'location3');
+                randomNumberRange = 3;
+                break;
             case 'leftCourt':
                 document.querySelector('.footwork.frontLeft').setAttribute('id', 'location1');
                 document.querySelector('.footwork.backLeft').setAttribute('id', 'location2');
@@ -190,6 +202,18 @@ function startPractice() {
                 document.querySelector('.footwork.backLeft').setAttribute('id', 'location1');
                 document.querySelector('.footwork.backRight').setAttribute('id', 'location2');
                 randomNumberRange = 2;
+                break;
+            case 'backTriangleLeft':
+                document.querySelector('.footwork.frontLeft').setAttribute('id', 'location1');
+                document.querySelector('.footwork.backLeft').setAttribute('id', 'location2');
+                document.querySelector('.footwork.backRight').setAttribute('id', 'location3');
+                randomNumberRange = 3;
+                break;
+            case 'backTriangleRight':
+                document.querySelector('.footwork.frontRight').setAttribute('id', 'location1');
+                document.querySelector('.footwork.backLeft').setAttribute('id', 'location2');
+                document.querySelector('.footwork.backRight').setAttribute('id', 'location3');
+                randomNumberRange = 3;
                 break;
             default:
                 randomNumberRange = 0;
