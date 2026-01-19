@@ -61,6 +61,7 @@ function startRepetitionCycle() {
         document.getElementById('countdown').textContent = '🎉 All Sets Complete! 🎉';
         document.getElementById('status-message').textContent = 'Great work!';
         document.getElementById('start-stop-button').textContent = 'Start';
+        isPracticeRunning = false;
         currentRepetition = 0;
     }
 }
@@ -251,9 +252,7 @@ function startPractice() {
             currentIndex++;
         } else {
             clearInterval(intervalId);
-            countdownElement.textContent = 'Practice Complete';
-            document.getElementById('start-stop-button').textContent = 'Start';
-            isPracticeRunning = false;
+            // Don't change button or state here - rest period or final completion will handle it
             resetFootworkLocation();
         }
     }, interval);
@@ -377,9 +376,21 @@ function startCountdownEverySecond() {
 }
 
 function startRestPeriod() {
-    // Stop the current practice
-    stopPractice();
+    // Stop the current practice timers but don't call stopPractice (keeps button as "Stop")
+    clearInterval(intervalId);
     stopMillisecondCountdown();
+    stopCountdownEverySecond();
+    
+    // Clear interval timer display
+    document.getElementById('interval-time').textContent = '';
+    
+    // Reset all footwork locations to transparent
+    for (let i = 1; i <= 6; i++) {
+        const location = document.getElementById(`location${i}`);
+        if (location) {
+            location.style.backgroundColor = 'transparent';
+        }
+    }
     
     isResting = true;
     const restDuration = parseInt(document.getElementById('rest').value);
