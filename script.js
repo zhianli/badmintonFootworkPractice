@@ -19,7 +19,7 @@ function togglePractice() {
 
 function startPractice() {
     let duration = parseInt(document.getElementById('duration').value) * 1000; // Convert to milliseconds
-    const interval = parseInt(document.getElementById('interval').value); // 1000ms 
+    const interval = parseFloat(document.getElementById('interval').value) * 1000; // Convert seconds to milliseconds 
     const totalRandomNumbers = duration / interval; // 60 seconds, 2000ms (60 / 2 = 30)
 
     const countdownElement = document.getElementById('countdown'); // countdown at the bottom of the page
@@ -71,7 +71,7 @@ function startPractice() {
     // function to highlight a location red for half the interval
     function highlightLocation(randomNumber) {
         const location = document.getElementById(`location${randomNumber}`); // the number that will mark red
-        const highlightInterval = parseInt(document.getElementById('interval').value) / 2 ; // set the highlight period for half the interval
+        const highlightInterval = parseFloat(document.getElementById('interval').value) * 1000 / 2 ; // set the highlight period for half the interval (convert to ms)
         location.style.backgroundColor = 'red';
 
         setTimeout(() => {
@@ -136,7 +136,7 @@ function stopPractice() {
 
 function startMillisecondCountdown() {
     var duration = parseInt(document.getElementById("duration").value);
-    var initialIntervalValue = parseInt(document.getElementById("interval").value);
+    var initialIntervalValue = parseFloat(document.getElementById("interval").value) * 1000; // Convert seconds to milliseconds
     var repeatCountdown = Math.floor(duration * 1000 / initialIntervalValue); // convert duration to milliseconds and divide by interval
 
     // Function to format time as mm:ss:mmm
