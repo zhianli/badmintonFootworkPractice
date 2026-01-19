@@ -190,6 +190,36 @@ nav a:hover {
     background-color: transparent;
     position: absolute;
     border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+/* 3D Sphere effect when highlighted */
+.footwork[style*="red"] {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #ff0000 45%, #8b0000);
+    box-shadow: 
+        0 10px 20px rgba(255, 0, 0, 0.4),
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+        inset 5px 5px 15px rgba(255, 100, 100, 0.5);
+    transform: translateY(-10px) scale(1.1);
+    animation: float 0.5s ease-in-out;
+}
+
+/* Special handling for middle positions that need centering preserved */
+.footwork.middleLeft[style*="red"],
+.footwork.middleRight[style*="red"] {
+    transform: translate(0, -50%) translateY(-10px) scale(1.1);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(-10px) scale(1.1); }
+    50% { transform: translateY(-15px) scale(1.15); }
+}
+
+@keyframes floatMiddle {
+    0%, 100% { transform: translate(0, -50%) translateY(-10px) scale(1.1); }
+    50% { transform: translate(0, -50%) translateY(-15px) scale(1.15); }
 }
 
 /* Position in court */
@@ -207,13 +237,21 @@ nav a:hover {
     top: 50%;
     left: 50px;
     transform: translate(0, -50%);
-} /* Middle left */
+}
+
+.footwork.middleLeft[style*="red"] {
+    animation: floatMiddle 0.5s ease-in-out;
+}
 
 .footwork.middleRight {
     top: 50%;
     right: 50px;
     transform: translate(0, -50%);
-} /* Middle right */
+}
+
+.footwork.middleRight[style*="red"] {
+    animation: floatMiddle 0.5s ease-in-out;
+}
 
 .footwork.backLeft {
     bottom: 20px;
