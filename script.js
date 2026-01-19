@@ -69,6 +69,7 @@ function startRaceCountdown() {
     const countdownDisplay = document.getElementById('interval-time');
     const intervalContainer = document.getElementById('interval-container');
     let count = 3;
+    let isFirstNumber = true;
     
     // Force remove background during countdown
     intervalContainer.style.background = 'transparent';
@@ -88,20 +89,28 @@ function startRaceCountdown() {
         }
         
         if (count > 0) {
-            // Set text and add class
-            countdownDisplay.textContent = count;
-            countdownDisplay.classList.add('race-countdown');
+            // Add small delay before first number to match subsequent transitions
+            const initialDelay = isFirstNumber ? 100 : 0;
+            isFirstNumber = false;
             
-            count--;
-            
-            // Clear after animation completes (1000ms)
             setTimeout(() => {
-                if (!isPracticeRunning) return; // Check again
-                countdownDisplay.textContent = '';
-                countdownDisplay.classList.remove('race-countdown');
-                // Small delay before next number
-                setTimeout(showNumber, 50);
-            }, 1000);
+                if (!isPracticeRunning) return;
+                
+                // Set text and add class
+                countdownDisplay.textContent = count;
+                countdownDisplay.classList.add('race-countdown');
+                
+                count--;
+                
+                // Clear after animation completes (1000ms)
+                setTimeout(() => {
+                    if (!isPracticeRunning) return; // Check again
+                    countdownDisplay.textContent = '';
+                    countdownDisplay.classList.remove('race-countdown');
+                    // Small delay before next number
+                    setTimeout(showNumber, 50);
+                }, 1000);
+            }, initialDelay);
         } else {
             // Check one more time before starting practice
             if (!isPracticeRunning) {
