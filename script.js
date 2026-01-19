@@ -6,7 +6,28 @@ let currentRepetition = 0; // Track current repetition number
 let totalRepetitions = 1; // Total number of repetitions
 let isResting = false; // Track if currently in rest period
 
-document.getElementById('start-stop-button').addEventListener('click', togglePractice); 
+document.getElementById('start-stop-button').addEventListener('click', togglePractice);
+
+// Training method dropdown event listeners
+const dropdown = document.querySelector('.dropdown');
+const dropdownContent = document.querySelector('.dropdown-content');
+
+document.querySelectorAll('.dropdown-content a').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const value = this.getAttribute('data-value');
+        const text = this.textContent;
+        document.getElementById('trainingMethod').value = value;
+        document.getElementById('training-method-button').textContent = `Training: ${text} \u25bc`;
+        
+        // Hide dropdown after selection
+        dropdownContent.style.display = 'none';
+        // Reset after a short delay so hover can work again
+        setTimeout(() => {
+            dropdownContent.style.display = '';
+        }, 100);
+    });
+});
 
 function togglePractice() {
     if (isPracticeRunning || isResting) {
@@ -55,8 +76,7 @@ function startPractice() {
 
     // function to set the corners with location numbers
     function decideTrainingMethod() {
-        var trainingMethod = document.querySelector('input[name="trainingMethod"]:checked');
-        var optionValue = trainingMethod.value;
+        var optionValue = document.getElementById('trainingMethod').value;
         var randomNumberRange; // decide the range of random number e.g., 2, 4, 6
 
         // Call different functions based on the selected option
