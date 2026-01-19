@@ -398,6 +398,7 @@ function startRestPeriod() {
             clearInterval(restInterval);
             if (isResting) {
                 isResting = false;
+                isPracticeRunning = true; // Re-enable practice for next set
                 currentRepetition++;
                 startRepetitionCycle();
             }
